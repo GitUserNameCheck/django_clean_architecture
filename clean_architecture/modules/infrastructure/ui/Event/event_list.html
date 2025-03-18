@@ -1,0 +1,82 @@
+<script>
+    function crud(url) {
+        var base_url = window.location.origin;
+        window.open(base_url + '/' + url, '_self');
+    }
+    function setFilterURL(url) {
+            var base_url = window.location.origin;
+            window.open(base_url + '/events/?id=' + url, '_self');
+    }
+</script>
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div>
+        <div class="col py-2">
+            <button type="button" class="btn btn-primary" onclick="crud('event/create');">Create new Event</button>
+            <button type="button" class="btn btn-primary"
+                                onclick="setFilterURL(document.getElementById('searchField').value);">Search</button>
+
+        <div class="col pt-2">
+                <input class="form-control" placeholder="Enter id to search..." name="id" id="searchField"
+                    value="{{ request.GET.id|default:'' }}">
+        </div>
+    </div>
+
+<nav aria-label="Page navigation">
+    <div class="row">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&id={{ request.GET.id }}">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}&id={{ request.GET.id }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&id={{ request.GET.id }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&id={{ request.GET.id }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</nav>
+    
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">location</th>
+                    <th scope="col">client</th>
+                    <th scope="col">event_start</th>
+                    <th scope="col">event_end</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in page_obj %}
+                    <tr>
+                        <td>{{event.id}}</td>
+                        <td>{{event.location}}</td>
+                        <td>{{event.client}}</td>
+                        <td>{{event.event_start}}</td>
+                        <td>{{event.event_end}}</td>
+                        <td><button type="button" class="btn btn-primary"
+                                onclick="crud('event/update/{{ event.id }}');">Edit</button></td>
+                        <td><button type="button" class="btn btn-danger"
+                                onclick="crud('event/delete/{{ event.id }}');">Delete</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
