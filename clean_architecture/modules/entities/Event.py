@@ -5,8 +5,8 @@ from . import Location, Client
 
 @dataclass
 class Event:
-    id: Optional[int]
     location: Location
     client: Client
     event_start: Optional[datetime]
     event_end: Optional[datetime]
+    id: Optional[int] = None
