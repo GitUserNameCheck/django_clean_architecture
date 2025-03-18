@@ -28,8 +28,8 @@ class EventDbRepository:
             event_end=event_model.event_end
         )
 
-    def delete(self, event: Event) -> None:
-        Event.objects.filter(id=event.id).delete()
+    def delete(self, event_id: int) -> None:
+        Event.objects.filter(id=event_id).delete()
 
     def get_all(self, page: int = 1, per_page: int = 12, queryset=None) -> List[Event]:
 

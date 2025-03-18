@@ -100,13 +100,13 @@ class EventDeleteView(DynamicTemplate, DeleteView):
         if not event:
             raise Http404("Event not found")
         return event
-
-    def delete(self, request, *args, **kwargs):
-
+    
+    def form_valid(self, form):
         event = self.get_object()
         response, status = event_controller.delete_event(event.id)
 
         return HttpResponseRedirect(self.success_url)
+
 
 class EventUpdateView(DynamicTemplate, UpdateView):
 

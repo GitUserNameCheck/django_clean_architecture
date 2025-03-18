@@ -15,7 +15,7 @@ class EventRepository:
     def get(self, event_id: int) -> Event:
         return self.data_base_repository.get(event_id)
 
-    def delete(self, event: Event) -> None:
+    def delete(self, event: int) -> None:
         return self.data_base_repository.delete(event)
 
     def get_all(self, **kwargs) -> List[Event]:

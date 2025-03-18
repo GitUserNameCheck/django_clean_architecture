@@ -75,8 +75,7 @@ class ClientDeleteView(DynamicTemplate, DeleteView):
             raise Http404("Client not found")
         return client
 
-    def delete(self, request, *args, **kwargs):
-
+    def form_valid(self, form):
         client = self.get_object()
         response, status = client_controller.delete_client(client.id)
 
