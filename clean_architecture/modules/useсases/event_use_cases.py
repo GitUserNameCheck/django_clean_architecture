@@ -8,7 +8,6 @@ class EventUseCases:
     event_repository: object
     
     def create_event(self, event: Event) -> Event:
-        print(event)
         if self._is_event_conflict(event.location, event.event_start, event.event_end):
             raise ValueError("An event is already scheduled at this location during the specified time.")
         return self.event_repository.save(event)

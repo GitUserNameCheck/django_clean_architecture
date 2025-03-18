@@ -50,9 +50,6 @@ class EventListView(DynamicTemplate, ListView):
         page = self.request.GET.get('page', 1)
         queryset = self.get_queryset()
 
-        # repository = EventDbRepository()
-        # page_obj = repository.get_all(page=int(page), per_page=self.paginate_by, queryset=queryset)
-
         response, status = event_controller.view_events(page=int(page), per_page=self.paginate_by, queryset=queryset)
 
         context['page_obj'] = response["events"]
@@ -77,9 +74,6 @@ class EventCreateView(DynamicTemplate, CreateView):
             event_start=event_data['event_start'],
             event_end=event_data['event_end']
         )
-
-        # repository = EventDbRepository()
-        # event = repository.save(event)
         
         response, status = event_controller.create_event(event)
 
